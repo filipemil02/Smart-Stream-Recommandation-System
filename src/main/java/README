@@ -1,0 +1,28 @@
+In the implementation of the project, the following design patterns were used: Singleton, Observer, and Decorator.
+
+Singleton was used to have a unique instance of the main class. I chose to use it for better control over the program for security 
+and debugging reasons (most operations take place here), both now and in the future when I will continue to work on this application.
+
+I used Observer and Decorator linked to each other. I realized I needed them during the project, specifically when I came across the 
+"LISTEN" command. When the user listens to a new stream, both the history of the listened streams and the number of listens of the 
+respective stream had to be modified, and I saw a good opportunity to automate this process using the Observer pattern. Given that 
+I was going to implement this pattern, I chose to use Decorator to add new functionalities to already created objects without 
+modifying the existing ones. Thus, I managed that when the user listens to a new stream, to also notify the respective stream to 
+automatically increase the number of listens.
+
+I used LinkedHashMap to store all data about the user, streams, and streamers to facilitate data access and specific reading 
+functions for each.
+
+All attributes of the three classes were declared private, and I used getters and setters to access them for security reasons.
+
+I overrode the toString() method of the Streams class because I needed the output to be in json format.
+
+For the "ADD" command, I used the Instant class to take the current date and with the help of the getEpochSecond() method, I 
+transformed it into the unix format to be able to store it in LinkedHashMap.
+
+For the "RECOMMEND" command, I took all the streams whose streamers were listened to by the user, except those streams that the 
+user has already watched, and I put them in an ArrayList to sort them by the number of listens to make the best recommendations.
+
+For the "SURPRISE" command, I used a helper list where I stored all streams of the type given as a parameter. Checking with the list 
+of streamers listened to by the user, I created another list with all streams except those of the previous streamers. I 
+sorted this list by the date the stream was created, and in case of coincidence (the same day), I sorted it by the number of listens.
